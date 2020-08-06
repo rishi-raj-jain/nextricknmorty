@@ -1,12 +1,12 @@
 import Link from 'next/link';
 import Head from 'next/head';
+import { useState } from 'react';
+import { useRouter } from 'next/router';
 import Logo from '../../components/logo';
-import EpisodeCard from '../../components/epiCard';
-import { useRouter } from 'next/router'
 import { useQuery } from '@apollo/react-hooks';
 import { withApollo } from '../../libs/apollo';
-import { allEpsiodes, singleEpisode, countEpiPages } from '../../gql/allCharacters';
-import { useState } from 'react';
+import EpisodeCard from '../../components/epiCard';
+import { getEpisodes } from '../../gql/queries';
 
 let Title= 'Next & GraphQL | Rick and Morty';
 let Description= 'A portal to browse rick and morty episodes with next & graphql.';
@@ -16,11 +16,11 @@ const EpisodeOs= ({bg, text}) => {
     
     const router = useRouter();
     const [pager, setPager]= useState(1);
-    console.log(router.query.slug);
+    const [epiName, setEpiName]= useState("");
 
     if(router.query.slug){
         
-        const { loading, error, data } = useQuery(singleEpisode(router.query.slug[0]));
+        const { loading, error, data } = useQuery(getEpisodes(1, router.query.slug[0]));
         if (error) return <div className="w-100 d-flex flex-column align-items-center justify-content-center" style={{height: '80vh'}}>
             <h1>Oops! Not Found :]</h1>
             <Logo style={{height: '200px'}} />
@@ -29,7 +29,6 @@ const EpisodeOs= ({bg, text}) => {
             <h1>Loading...</h1>
             <Logo style={{height: '200px'}} />
         </div>;
-        console.log(data);
         const Background= data.episodes.results[0].id%2==0 ? "/dumbEasier.jpg" : "/episodePaper.png";
         Title=  data.episodes.results[0].episode + ' - ' + data.episodes.results[0].name + ' | Next & GraphQL | Rick and Morty';
 
@@ -93,19 +92,8 @@ const EpisodeOs= ({bg, text}) => {
     }
 
     else{
-        const { loading: loadingA, error: errorA, data: dataA } = useQuery(countEpiPages);
-        const { loading, error, data } = useQuery(allEpsiodes(pager));
-        if(errorA || loadingA) return <></>;
-        const [totalEpiCount, setTotalCount]= useState(dataA.episodes.info.pages);
-        if (error) return <div className="w-100 d-flex flex-column align-items-center justify-content-center" style={{height: '80vh'}}>
-            <h1>Oops! Not Found :]</h1>
-            <Logo style={{height: '200px'}} />
-        </div>;
-        if (loading) return <div className="w-100 d-flex flex-column align-items-center justify-content-center" style={{height: '80vh'}}>
-            <h1>Loading...</h1>
-            <Logo style={{height: '200px'}} />
-        </div>;
-        console.log(data);
+
+        const { loading, error, data } = useQuery(getEpisodes(pager, epiName));
 
         Title= 'Episodes | Next & GraphQL | Rick and Morty';
 
@@ -124,27 +112,38 @@ const EpisodeOs= ({bg, text}) => {
 				<meta name="twitter:image" content={logoPath} />
 			</Head>
             <div className={"container-fluid " + bg + " " + text}>
-                <h1 className="my-5 text-center">{"Episodes"}</h1>
-                <div className="pb-5 container d-flex flex-row flex-wrap">
+                <div className="py-5 container d-flex flex-column flex-md-row justify-content-between align-items-center">
+                    <h1>Episodes</h1>
+                    <input placeholder="Input Episode" className="mt-3 mt-md-0 form-control" style={{maxWidth: '150px'}} value={epiName} type="text" onChange={(e)=>setEpiName(e.target.value)} />
+                </div>
+                {error && <div className="w-100 d-flex flex-column align-items-center justify-content-center" style={{height: '80vh'}}>
+                    <h1>Oops! Not Found :]</h1>
+                    <Logo style={{height: '200px'}} />
+                </div>}
+                {loading && <div className="w-100 d-flex flex-column align-items-center justify-content-center" style={{height: '80vh'}}>
+                    <h1>Loading...</h1>
+                    <Logo style={{height: '200px'}} />
+                </div>}
+                {data && <div className="pb-5 container d-flex flex-row flex-wrap">
                     {
                         data.episodes.results.map((item, index)=>(
                                 <EpisodeCard key={index} item={item} bg={bg} text={text} />
                             )
                         )
                     }
-                </div>
+                </div>}
             </div>
-            <div className={"d-flex align-items-center justify-content-center pb-3 " + bg + " " + text}>
+            {data && <div className={"d-flex align-items-center justify-content-center pb-3 " + bg + " " + text}>
                 {data.episodes.info.prev && <button className={"p-2 border rounded-lg " + bg + " " + text} onClick={()=>{setPager(pager-1)}}>
                     Prev
                 </button>}
                 {data.episodes.info.next && <button className={"p-2 border rounded-lg " + bg + " " + text + (data.episodes.info.prev ? " ml-3" : "")} onClick={()=>{setPager(pager+1)}}>
                     Next
                 </button>}
-            </div>
-            {totalEpiCount && <div className={"d-flex align-items-center justify-content-center pb-3 " + bg + " " + text}>
+            </div>}
+            {data && pager && <div className={"d-flex align-items-center justify-content-center pb-3 " + bg + " " + text}>
                 <span>
-                    {pager}/{totalEpiCount}
+                    {pager}/{data.episodes.info.pages}
                 </span>
             </div>}
         </>)

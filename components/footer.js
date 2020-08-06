@@ -17,6 +17,10 @@ const Footer= ({bg, text}) => {
                         <h5 style={{lineHeight: 1.6}}>
                             Rick and Morty is an American adult animated science fiction sitcom created by Justin Roiland and Dan Harmon for Cartoon Network's late-night programming block Adult Swim.
                         </h5>
+                        <hr className="border" />
+                        <h4 style={{lineHeight: 1.6}}>
+                            Made By: <a className={text + " border-bottom"} href="https://www.linkedin.com/in/digitalplayer1125/" target="_blank">Rishi Raj Jain</a>
+                        </h4>
                     </div>
                 </div>
             </div>

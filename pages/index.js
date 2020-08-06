@@ -3,33 +3,36 @@ import Logo from '../components/logo';
 import { withApollo } from '../libs/apollo';
 import { useQuery } from '@apollo/react-hooks';
 import EpisodeCard from '../components/epiCard';
-import { singleEpisode, allEpsiodes, allCharacters } from '../gql/allCharacters';
+import CharacterCard from '../components/charCard';
+import { listRandomEpi } from '../components/randomEpiPage';
+import { getCharacters, getEpisodes } from '../gql/queries';
 
-const IndexPage = ({bg, text}) => {
+const randomEpisode= listRandomEpi[Math.floor(Math.random() * listRandomEpi.length)];
 
-	const { loading, error, data } = useQuery(singleEpisode("Pilot"));
-	const { loading: loadingE, error: errorE, data: dataE } = useQuery(allEpsiodes(1));
-	const { loading: loadingC, error: errorC, data: dataC } = useQuery(allCharacters(1));
-	if (error) return <div className="w-100 d-flex flex-column align-items-center justify-content-center" style={{height: '80vh'}}>
-		<h1>Oops! Not Found :]</h1>
-		<Logo style={{height: '200px'}} />
-	</div>;
-	if (loading) return <div className="w-100 d-flex flex-column align-items-center justify-content-center" style={{height: '80vh'}}>
-		<h1>Loading...</h1>
-		<Logo style={{height: '200px'}} />
-	</div>;
+const IndexPage = ({isMobile, bg, text}) => {
+
+	const { loading, error, data } = useQuery(getEpisodes(1, randomEpisode.name));
+	const { loading: loadingE, error: errorE, data: dataE } = useQuery(getEpisodes(1, ""));
+	const { loading: loadingC, error: errorC, data: dataC } = useQuery(getCharacters(1, ""));
 	
-	const Background= data.episodes.results[0].id%2==0 ? "/dumbEasier.jpg" : "/episodePaper.png";
 	return (
 		<>
 			<div className={"pt-5 container-fluid d-flex flex-column " + bg + " " + text}>
 				<div className="container">
 					<h2>
-						Latest Epsiode
+						Watch Now
 					</h2>
 				</div>
+				{error && <div className="w-100 d-flex flex-column align-items-center justify-content-center" style={{height: '100px'}}>
+					<h1>Oops! Not Found :]</h1>
+					<Logo style={{height: '100px'}} />
+				</div>}
+				{loading && <div className="w-100 d-flex flex-column align-items-center justify-content-center" style={{height: '100px'}}>
+					<h1>Loading...</h1>
+					<Logo style={{height: '100px'}} />
+				</div>}
 				{data && <Link href={"/episodes/" + data.episodes.results[0].name}>
-					<div className="mt-3 container rounded py-5" style={{backgroundImage: `linear-gradient(#00000080, #00000080), url(${Background})`, backgroundSize: 'cover', minHeight: '300px', backgroundPosition: 'center, center', cursor: 'pointer'}} >
+					<div className="mt-3 container rounded py-5" style={{backgroundImage: `linear-gradient(#00000080, #00000080), url(${data.episodes.results[0].id%2==0 ? "/dumbEasier.jpg" : "/episodePaper.png"})`, backgroundSize: 'cover', minHeight: '300px', backgroundPosition: 'center, center', cursor: 'pointer'}} >
 						<div className="d-flex flex-column">
 							<span className="text-white" style={{fontSize: '20px'}}>
 								{data.episodes.results[0].episode}
@@ -52,20 +55,28 @@ const IndexPage = ({bg, text}) => {
 					<Logo style={{height: '200px'}} />
 				</div>}
 				{dataE && <div className="py-5 container d-flex flex-column">
-					<div className='d-flex flex-column flex-md-row align-items-center justify-content-between'>
-						<h2 className="ml-2">
+					<div className='d-flex flex-row align-items-center justify-content-between'>
+						{!isMobile && <h2 className="ml-2">
 							Episodes
-						</h2>
-						<Link href="/episodes">
-							<h3 style={{cursor: 'pointer'}}>
+						</h2>}
+						{isMobile && <h6 className="ml-2">
+						Episodes
+						</h6>}
+						{!isMobile && <Link href="/episodes">
+							<h2 style={{cursor: 'pointer'}}>
 								View all episodes &rarr;
-							</h3>
-						</Link>
+							</h2>
+						</Link>}
+						{isMobile && <Link href="/characters">
+							<h6>
+								View all episodes &rarr;
+							</h6>
+						</Link>}
 					</div>
 					<div className="py-3 d-flex flex-row flex-wrap">
 						{
 							dataE.episodes.results.map((item, index)=>(
-									index<8 && <EpisodeCard key={index} item={item} bg={bg} text={text} />
+									index<(isMobile ? 4 : 8) && <EpisodeCard key={index} item={item} bg={bg} text={text} />
 								)
 							)
 						}
@@ -79,38 +90,32 @@ const IndexPage = ({bg, text}) => {
 					<h1>Loading...</h1>
 					<Logo style={{height: '200px'}} />
 				</div>}
-				{dataC && <div className="py-5 container d-flex flex-column">
-					<div className='d-flex flex-column flex-md-row align-items-center justify-content-between'>
-						<h2 className="ml-2">
+				{dataC && <div className="pb-5 container d-flex flex-column">
+					<div className='d-flex flex-row align-items-center justify-content-between'>
+						{!isMobile && <h2 className="ml-2">
 							Characters
-						</h2>
-						<Link href="/characters">
-							<h3 style={{cursor: 'pointer'}}>
+						</h2>}
+						{isMobile && <h6 className="ml-2">
+							Characters
+						</h6>}
+						{!isMobile && <Link href="/characters">
+							<h2 style={{cursor: 'pointer'}}>
 								View all characters &rarr;
-							</h3>
-						</Link>
+							</h2>
+						</Link>}
+						{isMobile && <Link href="/characters">
+							<h6>
+								View all characters &rarr;
+							</h6>
+						</Link>}
 					</div>
 					<div className="d-flex flex-row flex-wrap">
 						{
 							dataC.characters.results.map(
 								(item, index)=>(
-									index<8 && <div key={index} className="col-sm-6 col-md-4 col-lg-3 p-2">
-										<Link href={"./characters/" + item.name}>
-											<div className={"w-100 h-100 rounded-lg border " + bg + " " + text} style={{cursor: 'pointer'}}>
-												<img className="w-100" src={item.image} />
-												<h5 className="p-2" style={{lineHeight: 1.6}}>
-													<span style={{fontSize: '15px'}}>
-														{item.origin.dimension}
-													</span><br />
-													{item.name}<br />
-													<span style={{fontSize: '15px'}}>
-														{"Gender: " + item.gender}
-													</span>
-												</h5>
-											</div>
-									</Link>
-								</div>
-							))
+									index<(isMobile ? 4 : 8) && <CharacterCard key={index} item={item} bg={bg} text={text} />
+								)
+							)
 						}
 					</div>
 				</div>}
