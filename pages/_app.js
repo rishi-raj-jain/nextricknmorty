@@ -9,6 +9,7 @@ const Description= 'A portal to browse rick and morty episodes with next & graph
 const logoPath= '/logo.png';
 
 class App extends React.Component {
+  
   state={
     darkMode: 0
   }

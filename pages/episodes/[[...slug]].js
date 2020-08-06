@@ -16,6 +16,7 @@ const EpisodeOs= ({bg, text}) => {
     
     const router = useRouter();
     const [pager, setPager]= useState(1);
+    console.log(router.query.slug);
 
     if(router.query.slug){
         
