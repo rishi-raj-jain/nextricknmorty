@@ -4,7 +4,7 @@ import Logo from '../../components/logo';
 import { useRouter } from 'next/router'
 import { useQuery } from '@apollo/react-hooks';
 import { withApollo } from '../../libs/apollo';
-import { allCharacters, singleCharacter } from '../../gql/allCharacters';
+import { allCharacters, singleCharacter, countCharPages } from '../../gql/allCharacters';
 import { useState } from 'react';
 
 let Title= 'Next & GraphQL | Rick and Morty';
@@ -91,8 +91,10 @@ const Character= ({bg, text}) => {
     }
 
     else{
-
+        const { loading: loadingA, error: errorA, data: dataA } = useQuery(countCharPages);
         const { loading, error, data } = useQuery(allCharacters(pager));
+        if(errorA || loadingA) return <></>;
+        const [totalCharCount, setTotalCount]= useState(dataA.characters.info.pages);
         if (error) return <div className="w-100 d-flex flex-column align-items-center justify-content-center" style={{height: '80vh'}}>
             <h1>Oops! Not Found :]</h1>
             <Logo style={{height: '200px'}} />
@@ -145,14 +147,19 @@ const Character= ({bg, text}) => {
                     }
                 </div>
             </div>
-            <div className={"d-flex align-items-center justify-content-center pb-5 " + bg + " " + text}>
+            <div className={"d-flex align-items-center justify-content-center pb-4 " + bg + " " + text}>
                 {data.characters.info.prev && <button className={"p-2 border rounded-lg " + bg + " " + text} onClick={()=>{setPager(pager-1)}}>
                     Prev
                 </button>}
-                {data.characters.info.next && <button className={"ml-3 p-2 border rounded-lg " + bg + " " + text} onClick={()=>{setPager(pager+1)}}>
+                {data.characters.info.next && <button className={"p-2 border rounded-lg " + bg + " " + text + (data.characters.info.prev ? " ml-3" : "")} onClick={()=>{setPager(pager+1)}}>
                     Next
                 </button>}
             </div>
+            {totalCharCount && <div className={"d-flex align-items-center justify-content-center pb-4 " + bg + " " + text}>
+                <span>
+                    {pager}/{totalCharCount}
+                </span>
+            </div>}
         </>)
 
     }

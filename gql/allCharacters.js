@@ -1,5 +1,25 @@
 import gql from 'graphql-tag';
 
+export const countEpiPages= gql`
+	query {
+		episodes {
+			info {
+				pages
+			}
+		}
+	}
+`;
+
+export const countCharPages= gql`
+	query{
+		characters {
+			info {
+				pages
+			}
+		}
+	}
+`
+
 export function allCharacters(a){	
 	return gql`
 		query allCharacters {

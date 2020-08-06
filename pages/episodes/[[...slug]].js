@@ -5,7 +5,7 @@ import EpisodeCard from '../../components/epiCard';
 import { useRouter } from 'next/router'
 import { useQuery } from '@apollo/react-hooks';
 import { withApollo } from '../../libs/apollo';
-import { allEpsiodes, singleEpisode } from '../../gql/allCharacters';
+import { allEpsiodes, singleEpisode, countEpiPages } from '../../gql/allCharacters';
 import { useState } from 'react';
 
 let Title= 'Next & GraphQL | Rick and Morty';
@@ -93,8 +93,10 @@ const EpisodeOs= ({bg, text}) => {
     }
 
     else{
-
+        const { loading: loadingA, error: errorA, data: dataA } = useQuery(countEpiPages);
         const { loading, error, data } = useQuery(allEpsiodes(pager));
+        if(errorA || loadingA) return <></>;
+        const [totalEpiCount, setTotalCount]= useState(dataA.episodes.info.pages);
         if (error) return <div className="w-100 d-flex flex-column align-items-center justify-content-center" style={{height: '80vh'}}>
             <h1>Oops! Not Found :]</h1>
             <Logo style={{height: '200px'}} />
@@ -132,14 +134,19 @@ const EpisodeOs= ({bg, text}) => {
                     }
                 </div>
             </div>
-            <div className={"d-flex align-items-center justify-content-center pb-5 " + bg + " " + text}>
+            <div className={"d-flex align-items-center justify-content-center pb-3 " + bg + " " + text}>
                 {data.episodes.info.prev && <button className={"p-2 border rounded-lg " + bg + " " + text} onClick={()=>{setPager(pager-1)}}>
                     Prev
                 </button>}
-                {data.episodes.info.next && <button className={"ml-3 p-2 border rounded-lg " + bg + " " + text} onClick={()=>{setPager(pager+1)}}>
+                {data.episodes.info.next && <button className={"p-2 border rounded-lg " + bg + " " + text + (data.episodes.info.prev ? " ml-3" : "")} onClick={()=>{setPager(pager+1)}}>
                     Next
                 </button>}
             </div>
+            {totalEpiCount && <div className={"d-flex align-items-center justify-content-center pb-3 " + bg + " " + text}>
+                <span>
+                    {pager}/{totalEpiCount}
+                </span>
+            </div>}
         </>)
     }
 }
