@@ -1,12 +1,12 @@
 import Link from 'next/link';
-import Head from 'next/head';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import Logo from '../../components/logo';
+import HeadTag from '../../components/headTag';
 import { useQuery } from '@apollo/react-hooks';
 import { withApollo } from '../../libs/apollo';
-import EpisodeCard from '../../components/epiCard';
 import { getEpisodes } from '../../gql/queries';
+import EpisodeCard from '../../components/epiCard';
 
 let Title= ' Rick and Morty';
 let Description= 'A portal to browse rick and morty episodes with next & graphql.';
@@ -34,18 +34,7 @@ const EpisodeOs= ({bg, text}) => {
 
         return (
             <>
-                <Head>
-                    <title>{Title}</title>
-                    <meta name="og:url" property="og:url" content="" />
-                    <meta name="og:type" property="og:type" content="website" />
-                    <meta name="og:title" property="og:title" content={Title} />
-                    <meta name="og:description" property="og:description" content={Description} />
-                    <meta name="og:image" property="og:image" content={logoPath} />
-                    <meta name="twitter:card" content="summary_large_image" />
-                    <meta name="twitter:title" content={Title} />
-                    <meta name="twitter:description" content={Description} />
-                    <meta name="twitter:image" content={logoPath} />
-                </Head>
+                <HeadTag Suffix={router.query.slug[0]} Title={Title} logoPath={logoPath} Description={Description} />
                 <div className={"pt-5 container-fluid d-flex flex-column " + bg + " " + text}>
                     <div className="mt-3 container rounded py-5" style={{backgroundImage: `linear-gradient(#00000080, #00000080), url(${Background})`, backgroundSize: 'cover', minHeight: '300px', backgroundPosition: 'center, center'}} >
                         <div className="d-flex flex-column">
@@ -98,19 +87,7 @@ const EpisodeOs= ({bg, text}) => {
         Title= 'Episodes |  Rick and Morty';
 
         return (<>
-            <Head>
-				<title>{Title}</title>
-				<link rel="icon" href={logoPath} />
-				<meta name="og:url" property="og:url" content="" />
-				<meta name="og:type" property="og:type" content="website" />
-				<meta name="og:title" property="og:title" content={Title} />
-				<meta name="og:description" property="og:description" content={Description} />
-				<meta name="og:image" property="og:image" content={logoPath} />
-				<meta name="twitter:card" content="summary_large_image" />
-				<meta name="twitter:title" content={Title} />
-				<meta name="twitter:description" content={Description} />
-				<meta name="twitter:image" content={logoPath} />
-			</Head>
+            <HeadTag Suffix={"episodes"} Title={Title} logoPath={logoPath} Description={Description} />
             <div className={"container-fluid " + bg + " " + text}>
                 <div className="py-5 container d-flex flex-column flex-md-row justify-content-between align-items-center">
                     <h1>Episodes</h1>

@@ -1,11 +1,11 @@
-import Head from 'next/head';
+import { useState } from 'react';
 import Logo from '../../components/logo';
 import CharacterCard from '../../components/charCard';
 import { useRouter } from 'next/router'
 import { useQuery } from '@apollo/react-hooks';
+import HeadTag from '../../components/headTag';
 import { withApollo } from '../../libs/apollo';
 import { getCharacters } from '../../gql/queries';
-import { useState } from 'react';
 
 let Title= ' Rick and Morty';
 let Description= 'Learn more about the characters of Rick and Morty | A portal to browse rick and morty with next & graphql.';
@@ -33,19 +33,7 @@ const Character= ({bg, text}) => {
         Description= 'Get to know about ' + data.characters.results.length + ' different ' + data.characters.results[0].name + ' | A portal to browse rick and morty with next & graphql.';
 
         return (<>
-            <Head>
-				<title>{Title}</title>
-				<link rel="icon" href={logoPath} />
-				<meta name="og:url" property="og:url" content="" />
-				<meta name="og:type" property="og:type" content="website" />
-				<meta name="og:title" property="og:title" content={Title} />
-				<meta name="og:description" property="og:description" content={Description} />
-				<meta name="og:image" property="og:image" content={logoPath} />
-				<meta name="twitter:card" content="summary_large_image" />
-				<meta name="twitter:title" content={Title} />
-				<meta name="twitter:description" content={Description} />
-				<meta name="twitter:image" content={logoPath} />
-			</Head>
+            <HeadTag Suffix={router.query.slug[0]} Title={Title} logoPath={logoPath} Description={Description} />
             <div className={"container-fluid " + bg + " " + text}>
                 <h1 className="my-5 text-center">{data.characters.results[0].name + (data.characters.results.length>1 ? "(s)" : "")}</h1>
                 <div className="pb-5 container justify-content-center d-flex flex-row flex-wrap">
@@ -97,19 +85,7 @@ const Character= ({bg, text}) => {
         Title= 'Characters |  Rick and Morty';
 
         return (<>
-            <Head>
-				<title>{Title}</title>
-				<link rel="icon" href={logoPath} />
-				<meta name="og:url" property="og:url" content="" />
-				<meta name="og:type" property="og:type" content="website" />
-				<meta name="og:title" property="og:title" content={Title} />
-				<meta name="og:description" property="og:description" content={Description} />
-				<meta name="og:image" property="og:image" content={logoPath} />
-				<meta name="twitter:card" content="summary_large_image" />
-				<meta name="twitter:title" content={Title} />
-				<meta name="twitter:description" content={Description} />
-				<meta name="twitter:image" content={logoPath} />
-			</Head>
+            <HeadTag Suffix={"characters"} Title={Title} logoPath={logoPath} Description={Description} />
             <div className={"container-fluid " + bg + " " + text}>
                 <div className="py-5 container d-flex flex-column flex-md-row justify-content-between align-items-center">
                     <h1>Characters</h1>

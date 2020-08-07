@@ -55,11 +55,11 @@ class App extends React.Component {
           <link rel="icon" href={logoPath} />
           <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dosis:wght@500&display=swap" />
           <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/css/bootstrap.min.css" integrity="sha384-VCmXjywReHh4PwowAiWNagnWcLhlEJLA5buUprzK8rxFgeH0kww/aWY76TfkUoSX" crossOrigin="anonymous" />
-          <meta name="og:url" property="og:url" content="" />
+          <meta name="og:url" property="og:url" content="https://nextrickandmortyapi.vercel.app" />
           <meta name="og:type" property="og:type" content="website" />
           <meta name="og:title" property="og:title" content={Title} />
           <meta name="og:description" property="og:description" content={Description} />
-          <meta name="og:image" property="og:image" content={logoPath} />
+          <meta name="og:image" property="og:image" content={"https://nextrickandmortyapi.vercel.app" + logoPath} />
           <meta name="twitter:card" content="summary_large_image" />
           <meta name="twitter:title" content={Title} />
           <meta name="twitter:description" content={Description} />
