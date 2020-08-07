@@ -7,7 +7,7 @@ import { withApollo } from '../../libs/apollo';
 import { getCharacters } from '../../gql/queries';
 import { useState } from 'react';
 
-let Title= 'Next & GraphQL | Rick and Morty';
+let Title= ' Rick and Morty';
 let Description= 'Learn more about the characters of Rick and Morty | A portal to browse rick and morty with next & graphql.';
 const logoPath= '/logo.png';
 
@@ -29,7 +29,7 @@ const Character= ({bg, text}) => {
             <Logo style={{height: '200px'}} />
         </div>;
 
-        Title=  data.characters.results[0].name + ' | Next & GraphQL | Rick and Morty';
+        Title=  data.characters.results[0].name + ' |  Rick and Morty';
         Description= 'Get to know about ' + data.characters.results.length + ' different ' + data.characters.results[0].name + ' | A portal to browse rick and morty with next & graphql.';
 
         return (<>
@@ -94,7 +94,7 @@ const Character= ({bg, text}) => {
 
         const { loading, error, data } = useQuery(getCharacters(pager, charName));
 
-        Title= 'Characters | Next & GraphQL | Rick and Morty';
+        Title= 'Characters |  Rick and Morty';
 
         return (<>
             <Head>

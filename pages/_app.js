@@ -4,7 +4,7 @@ import Head from 'next/head';
 import Footer from '../components/footer';
 import Header from '../components/header';
 
-const Title= 'Next & GraphQL | Rick and Morty';
+const Title= ' Rick and Morty';
 const Description= 'A portal to browse rick and morty episodes with next & graphql.';
 const logoPath= '/logo.png';
 

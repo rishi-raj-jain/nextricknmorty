@@ -8,7 +8,7 @@ import { withApollo } from '../../libs/apollo';
 import EpisodeCard from '../../components/epiCard';
 import { getEpisodes } from '../../gql/queries';
 
-let Title= 'Next & GraphQL | Rick and Morty';
+let Title= ' Rick and Morty';
 let Description= 'A portal to browse rick and morty episodes with next & graphql.';
 const logoPath= '/logo.png';
 
@@ -30,7 +30,7 @@ const EpisodeOs= ({bg, text}) => {
             <Logo style={{height: '200px'}} />
         </div>;
         const Background= data.episodes.results[0].id%2==0 ? "/dumbEasier.jpg" : "/episodePaper.png";
-        Title=  data.episodes.results[0].episode + ' - ' + data.episodes.results[0].name + ' | Next & GraphQL | Rick and Morty';
+        Title=  data.episodes.results[0].episode + ' - ' + data.episodes.results[0].name + ' |  Rick and Morty';
 
         return (
             <>
@@ -95,7 +95,7 @@ const EpisodeOs= ({bg, text}) => {
 
         const { loading, error, data } = useQuery(getEpisodes(pager, epiName));
 
-        Title= 'Episodes | Next & GraphQL | Rick and Morty';
+        Title= 'Episodes |  Rick and Morty';
 
         return (<>
             <Head>

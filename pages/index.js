@@ -67,7 +67,7 @@ const IndexPage = ({isMobile, bg, text}) => {
 								View all episodes &rarr;
 							</h2>
 						</Link>}
-						{isMobile && <Link href="/characters">
+						{isMobile && <Link href="/episodes">
 							<h6>
 								View all episodes &rarr;
 							</h6>
