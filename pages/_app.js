@@ -63,7 +63,7 @@ class App extends React.Component {
           <meta name="twitter:card" content="summary_large_image" />
           <meta name="twitter:title" content={Title} />
           <meta name="twitter:description" content={Description} />
-          <meta name="twitter:image" content={logoPath} />
+          <meta name="twitter:image" content={"https://nextrickandmortyapi.vercel.app" + logoPath} />
           <script
             async
             src="https://www.googletagmanager.com/gtag/js?id=UA-152720382-3"
