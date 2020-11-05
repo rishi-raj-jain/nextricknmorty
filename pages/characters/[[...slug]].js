@@ -33,7 +33,7 @@ const Character= ({bg, text}) => {
         Description= 'Get to know about ' + data.characters.results.length + ' different ' + data.characters.results[0].name + ' | A portal to browse rick and morty with next & graphql.';
 
         return (<>
-            <HeadTag Suffix={router.query.slug[0]} Title={Title} logoPath={logoPath} Description={Description} />
+            <HeadTag Suffix={"characters/"+router.query.slug[0]} Title={Title} logoPath={logoPath} Description={Description} />
             <div className={"container-fluid " + bg + " " + text}>
                 <h1 className="my-5 text-center">{data.characters.results[0].name + (data.characters.results.length>1 ? "(s)" : "")}</h1>
                 <div className="pb-5 container justify-content-center d-flex flex-row flex-wrap">

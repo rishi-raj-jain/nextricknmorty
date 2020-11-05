@@ -34,7 +34,7 @@ const EpisodeOs= ({bg, text}) => {
 
         return (
             <>
-                <HeadTag Suffix={router.query.slug[0]} Title={Title} logoPath={logoPath} Description={Description} />
+                <HeadTag Suffix={"episodes/"+router.query.slug[0]} Title={Title} logoPath={logoPath} Description={Description} />
                 <div className={"pt-5 container-fluid d-flex flex-column " + bg + " " + text}>
                     <div className="mt-3 container rounded py-5" style={{backgroundImage: `linear-gradient(#00000080, #00000080), url(${Background})`, backgroundSize: 'cover', minHeight: '300px', backgroundPosition: 'center, center'}} >
                         <div className="d-flex flex-column">
