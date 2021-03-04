@@ -1,13 +1,13 @@
-import Logo from '../../components/logo'
-import HeadTag from '../../components/headTag'
-import EpisodeCard from '../../components/epiCard'
 import Link from 'next/link'
 import { useState } from 'react'
 import { useRouter } from 'next/router'
 import { useQuery } from '@apollo/react-hooks'
-import { withApollo } from '../../libs/apollo'
-import { getEpisodes } from '../../gql/queries'
-import { Description, logoPath } from '../../components/data'
+import { withApollo } from '@/libs/apollo'
+import { getEpisodes } from '@/gql/queries'
+import { Description, logoPath } from '@/libs/data'
+import { Logo, HeadTag, EpisodeCard } from '@/components/index'
+import episodeStyles from '@/styles/episodes.module.css'
+import appStyles from '@/styles/app.module.css'
 
 const EpisodeOs = ({ bg, text }) => {
     const router = useRouter()

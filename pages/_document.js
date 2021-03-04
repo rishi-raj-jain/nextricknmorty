@@ -1,5 +1,5 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document'
-import { GA_TRACKING_ID } from '../components/data'
+import { GA_TRACKING_ID } from '@/libs/data'
 
 export default class MyDocument extends Document {
     render() {
@@ -9,6 +9,10 @@ export default class MyDocument extends Document {
                     <script
                         async
                         src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`}
+                    />
+                    <link
+                        href="https://fonts.googleapis.com/css2?family=Dosis&display=swap"
+                        rel="stylesheet"
                     />
                     <script
                         dangerouslySetInnerHTML={{

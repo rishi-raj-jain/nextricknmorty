@@ -1,11 +1,9 @@
 import Link from 'next/link'
-import Logo from '../components/logo'
-import EpisodeCard from '../components/epiCard'
-import CharacterCard from '../components/charCard'
-import { withApollo } from '../libs/apollo'
+import { Logo, EpisodeCard, CharacterCard } from '@/components/index'
+import { withApollo } from '@/libs/apollo'
 import { useQuery } from '@apollo/react-hooks'
-import { listRandomEpi } from '../components/data'
-import { getCharacters, getEpisodes } from '../gql/queries'
+import { listRandomEpi } from '@/libs/data'
+import { getCharacters, getEpisodes } from '@/gql/queries'
 
 const randomEpisode =
     listRandomEpi[Math.floor(Math.random() * listRandomEpi.length)]

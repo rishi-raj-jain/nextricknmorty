@@ -1,11 +1,10 @@
 import Head from 'next/head'
-import Footer from '../components/footer'
-import Header from '../components/header'
-import HeadTag from '../components/headTag'
-import styles from '../styles.module.css'
-import 'bootstrap/dist/css/bootstrap.css'
 import { useEffect, useState } from 'react'
-import { Title, logoPath, Description } from '../components/data'
+import { Footer, Header, HeadTag } from '@/components/index'
+import { Title, logoPath, Description } from '@/libs/data'
+import styles from '../styles.module.css'
+import appStyle from '@/styles/app.module.css'
+import 'bootstrap/dist/css/bootstrap.css'
 
 const App = ({ Component, pageProps }) => {
     const [darkMode, setDarkMode] = useState(0)
@@ -22,17 +21,6 @@ const App = ({ Component, pageProps }) => {
                 /(iPad)|(iPhone)|(iPod)|(android)|(webOS)/i
             )
         )
-        var family = 'Dosis'
-        var headID = document.getElementsByTagName('head')[0]
-        let link = document.createElement('link')
-        link.type = 'text/css'
-        link.rel = 'stylesheet'
-        link.media = 'print'
-        link.onload = function () {
-            this.media = 'all'
-        }
-        headID.appendChild(link)
-        link.href = `https://fonts.googleapis.com/css2?family=${family}&display=swap`
     }, [])
 
     const toggleMode = function () {
@@ -42,8 +30,7 @@ const App = ({ Component, pageProps }) => {
 
     return (
         <div
-            style={{ fontFamily: 'Dosis' }}
-            className="parent d-flex flex-column"
+            className={`${appStyle['parent']} ${appStyle['d-flex']} ${appStyle['flex-column']}`}
         >
             <Head>
                 <link rel="icon" href={logoPath} />

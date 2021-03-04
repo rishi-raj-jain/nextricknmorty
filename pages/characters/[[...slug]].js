@@ -1,12 +1,10 @@
-import Logo from '../../components/logo'
-import CharacterCard from '../../components/charCard'
-import HeadTag from '../../components/headTag'
 import { useState } from 'react'
 import { useRouter } from 'next/router'
 import { useQuery } from '@apollo/react-hooks'
-import { withApollo } from '../../libs/apollo'
-import { getCharacters } from '../../gql/queries'
-import { Description, logoPath } from '../../components/data'
+import { Logo, CharacterCard, HeadTag } from '@/components/index'
+import { withApollo } from '@/libs/apollo'
+import { getCharacters } from '@/gql/queries'
+import { Description, logoPath } from '@/libs/data'
 
 const Character = ({ bg, text }) => {
     const router = useRouter()
