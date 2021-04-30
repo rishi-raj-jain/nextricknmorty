@@ -32,7 +32,7 @@ const Footer = ({ bg, text }) => {
                             Made By:{' '}
                             <a
                                 className={text + ' border-bottom'}
-                                href="https://www.linkedin.com/in/digitalplayer1125/"
+                                href="https://www.linkedin.com/in/rishi-raj-jain/"
                                 target="_blank"
                             >
                                 Rishi Raj Jain
