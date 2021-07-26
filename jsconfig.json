@@ -2,18 +2,10 @@
     "compilerOptions": {
         "baseUrl": ".",
         "paths": {
-            "@/components/*": [
-                "components/*"
-            ],
-            "@/libs/*": [
-                "libs/*"
-            ],
-            "@/gql/*": [
-                "gql/*"
-            ],
-            "@/styles/*": [
-                "styles/*"
-            ]
+            "@/components/*": ["components/*"],
+            "@/libs/*": ["libs/*"],
+            "@/gql/*": ["gql/*"],
+            "@/styles/*": ["styles/*"]
         }
     }
 }
